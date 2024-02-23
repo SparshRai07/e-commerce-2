@@ -12,31 +12,30 @@
     <v-img
       cover
       height="250"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+      :src="product.image"
     ></v-img>
 
     <v-card-title class="text-h5 text-center pt-4">
-      Cafe Badilico
+      {{product.name}}
     </v-card-title>
 
     <v-card-subtitle class="text-center">Local Favorite</v-card-subtitle>
+ 
+ <v-card-text class="d-flex justify-center align-center flex-wrap">
+  <div class="d-flex align-center">
+    <div class="text-center align-middle" style="border-radius: 10px; padding: 5px 10px; background-color: #f0f0f0; display: inline-block;">
+      PRICE: <span style="me-3 color: goldenrod; border-radius: 50%; padding: 2px 5px ;">Rs.{{ product.sellingPrice }}
+         <span class="text-decoration-line-through text-red" v-if="product.discount">Rs.{{ product.sellingPrice }}</span></span>
+    </div>
+  </div>
+</v-card-text>
 
-    <v-card-text class="d-flex justify-center align-center flex-wrap">
-      <div class="d-flex align-center">
-        <v-rating
-          v-model="rating"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="20"
-          class="mr-2"
-        ></v-rating>
-        <div class="text-center text-grey align-middle">{{ rating.toFixed(1) }} (413)</div>
-      </div>
-    </v-card-text>
 
-    <div class="my-4 text-subtitle-1 text-center">
+
+
+
+
+    <div class="my-4 text-subtitle-1  text-grey text-center">
       Small plates, salads & sandwiches - an intimate setting with 12 indoor
       seats plus patio seating.
     </div>
@@ -57,7 +56,8 @@
       </v-btn>
     </div>
 
-    <div class="px-4 mt-4 d-flex justify-center align-center">
+    <div class="px-2 py-4">
+<div class="px-4 mt-4 d-flex justify-center align-center">
       <v-btn icon class="mr-4" @click="decrement">
         <v-icon>mdi-minus</v-icon>
       </v-btn>
@@ -66,6 +66,8 @@
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       
+
+    </div>
 
     </div>
   </v-card>

@@ -30,7 +30,8 @@
           class="login-button"
           @mouseenter="buttonHovered = true"
           @mouseleave="buttonHovered = false"
-          :class="{ 'hovered': buttonHovered }"
+          :class="{ 'hovered':buttonHovered }"
+          @click="$router.push('/login')"
         >
           LOGIN
         </v-btn>
