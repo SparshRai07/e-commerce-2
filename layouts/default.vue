@@ -90,6 +90,25 @@ export default {
     },
   },
 };
+
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const buttonHovered = ref(false)
+const router = useRouter()
+
+const handleMouseEnter = () => {
+  buttonHovered.value = true
+}
+
+const handleMouseLeave = () => {
+  buttonHovered.value = false
+}
+
+const handleButtonClick = () => {
+  console.log('Button clicked!')
+  router.push('/login')
+}
 </script>
 
 <style scoped>
