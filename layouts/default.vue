@@ -24,6 +24,23 @@
         <v-btn variant="text" icon="mdi-cart"></v-btn>
 
         <v-btn variant="text" icon="mdi-dots-vertical"></v-btn>
+          
+
+            <v-btn 
+       variant = "text"
+       prepend-icon="mdi-login"
+       text="Logout"
+       @click="authStore.logout()"
+       
+       >
+       Logout
+       <v-progress-circular
+       indeterminate
+       color="primary">
+       </v-progress-circular>
+       </v-btn>
+
+
 
         <v-btn
           variant="text"
@@ -32,9 +49,14 @@
           @mouseleave="buttonHovered = false"
           :class="{ 'hovered':buttonHovered }"
           @click="$router.push('/login')"
+          
         >
           LOGIN
         </v-btn>
+
+     
+
+       
 
       </v-app-bar>
 
@@ -93,6 +115,7 @@ export default {
 
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '~/store/auth';
 
 const buttonHovered = ref(false)
 const router = useRouter()
@@ -109,6 +132,8 @@ const handleButtonClick = () => {
   console.log('Button clicked!')
   router.push('/login')
 }
+
+const authStore = useAuthStore();
 </script>
 
 <style scoped>
