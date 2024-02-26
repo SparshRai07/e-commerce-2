@@ -13,6 +13,7 @@
       cover
       height="250"
       :src="product.image"
+      :lazy-src="product.image"
     ></v-img>
 
     <v-card-title class="text-h5 text-center pt-4">
@@ -49,7 +50,12 @@
         :class="{ 'hovered': cartHovered }"
         @mouseenter="cartHovered = true"
         @mouseleave="cartHovered = false"
-        @click="reserve"
+        @click="cartStore.addToCart({
+          product_id: product.id,
+          qty: count,
+          price: product.sellingPrice,
+
+        })"
       >
         <v-icon left>mdi-cart-plus</v-icon>
        / ADD TO CART
@@ -73,11 +79,24 @@
   </v-card>
 </template>
 
+
 <script setup>
+import {useCartStore} from "~/store/cart";
+const cartStore = useCartStore();
+const count = ref(1);
+// const cartData = ref({
+//   product_id: null,
+//   qty: null,
+//   price: null,
+
+// });
+
+
+
 import { ref } from 'vue'
 
 const loading = ref(false)
-const count = ref(1)
+
 const rating = ref(4.5)
 const cartHovered = ref(false)
 

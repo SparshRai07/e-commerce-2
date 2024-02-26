@@ -21,12 +21,13 @@
 
         <v-btn variant="text" icon="mdi-magnify"></v-btn>
 
-        <v-btn variant="text" icon="mdi-cart"></v-btn>
+        <v-btn variant="text" icon="mdi-cart" @click="$router.push('/cart')">{{cartStore.items.length}}</v-btn>
 
         <v-btn variant="text" icon="mdi-dots-vertical"></v-btn>
           
 
             <v-btn 
+            v-if = "authStore.token"
        variant = "text"
        prepend-icon="mdi-login"
        text="Logout"
@@ -35,6 +36,7 @@
        >
        Logout
        <v-progress-circular
+       v-if="authStore.loading"
        indeterminate
        color="primary">
        </v-progress-circular>
@@ -49,7 +51,7 @@
           @mouseleave="buttonHovered = false"
           :class="{ 'hovered':buttonHovered }"
           @click="$router.push('/login')"
-          
+          v-else
         >
           LOGIN
         </v-btn>
@@ -81,6 +83,13 @@
 
 
 <script>
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '~/store/auth';
+import { useCartStore } from '~/store/cart';
+const cartStore = useCartStore();
+cartStore.getCartItems();
+authStore.getToken();
 export default {
   data: () => ({
     drawer: false,
@@ -113,27 +122,35 @@ export default {
   },
 };
 
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '~/store/auth';
 
-const buttonHovered = ref(false)
-const router = useRouter()
+const authStore = useAuthStore(); // Initialize the store
 
+// Watch for changes in the group property
+const group = ref(null);
+const router = useRouter();
+const buttonHovered = ref(false);
+
+watch(group, () => {
+  authStore.drawer = false;
+});
+
+// Functions to handle mouse events
 const handleMouseEnter = () => {
-  buttonHovered.value = true
+  buttonHovered.value = true;
 }
 
 const handleMouseLeave = () => {
-  buttonHovered.value = false
+  buttonHovered.value = false;
 }
 
 const handleButtonClick = () => {
   console.log('Button clicked!')
-  router.push('/login')
+  router.push('/login');
 }
 
-const authStore = useAuthStore();
+authStore.getToken(); // Get the token from localStorage
+
+
 </script>
 
 <style scoped>
