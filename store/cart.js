@@ -9,6 +9,23 @@ export const useCartStore = defineStore('cart',{
 
    }),
 
+getters: {
+   orderData() {
+      return {
+         total: this.items
+         .map((i) => i.amount)
+         .reduce((p, a) => p + a, 0),
+         orderlines:this.items.map((i) => {
+            return {
+               product_id: i.product_id,
+               qty: i.qty,
+               amount: i.amount,
+            };
+         }),
+      };
+   },
+},
+
    actions:{
       async addToCart(cartData){
 try{
@@ -52,5 +69,20 @@ try{
         this.loading = false;
       }
            },
+
+      async placeOrder(orderData){
+         try{ 
+            var token = localStorage.getItem("token");
+          var response = await axiosApi.post("order", orderData, {
+            headers:{'Authorization': `Bearer${token}` }});
+          if(response.status == 200) {
+            alert ("your order has been placed...");
+          }
+         }catch(e){
+
+         }finally{
+
+         }
+      }
    },
 });

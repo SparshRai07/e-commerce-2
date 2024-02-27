@@ -4,7 +4,14 @@
       <v-label class="text-h4">Welcome Back</v-label>
       <v-text-field label="Email" outlined v-model="userData.email"></v-text-field>
       <v-text-field label="Password" type="password" outlined v-model="userData.password"></v-text-field>
-      <v-btn color="primary" @click="authStore.login(userData)">Login</v-btn>
+      <v-btn color="primary" @click="authStore.login(userData)">Login
+        <v-progress-circular
+        indeterminate 
+        color="primary"
+        v-if="aurhStore.loading">
+
+        </v-progress-circular>
+      </v-btn>
     </v-container>
   </div>
 </template>

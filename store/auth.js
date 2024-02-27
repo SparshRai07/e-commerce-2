@@ -4,7 +4,7 @@ import axiosApi from "~/config/axios";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    token: "",
+    message: null,
     loading: false,
   }),
 
@@ -17,11 +17,11 @@ export const useAuthStore = defineStore("auth", {
     async login(userData) {
       try {
         this.loading = true;
-        const response = await axiosApi.post("login", userData);
+        var response = await axiosApi.post("login", userData);
 
-        if (response.status === 200) {
+        if (response.status == 200) {
           if (response.data.data.token !== null) {
-            this.token = response.data.data.token;
+            this.message = "login success"
             localStorage.setItem("token", `${response.data.data.token}`);
             navigateTo("/");
           }
@@ -35,9 +35,9 @@ export const useAuthStore = defineStore("auth", {
 
     async logout() {
       try {
-        const token = localStorage.getItem("token");
+        var token = localStorage.getItem("token");
         this.loading = true;
-        const response = await axiosApi.get("logout", {
+        var response = await axiosApi.get("logout", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
