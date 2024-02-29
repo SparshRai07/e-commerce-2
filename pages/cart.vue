@@ -1,7 +1,6 @@
 <template>
   <v-container>
-    <div v-if ="cartstore.loading">loading</div>
-    <!-- <div v-else={{ orderData}}></div> -->
+    <div v-if="cartStore.loading">loading</div>
     <div v-for="p in cartStore.items" :key="p.id">
       <div class="border mb-2 p-4">
         <div>
@@ -20,31 +19,20 @@
     </div>
 
     <div>
-      <v-btn  @click="cartStore.orderData={{cartStore.orderData}}>
-        Place Order
-      </v-btn>
+      <v-btn @click="placeOrder">Place Order</v-btn>
     </div>
   </v-container>
 </template>
 
 <script setup>
-import { useCartStore } from "~/store/cart";
-const cartStore = useCartStore();
+import { useAuthStore } from "~/store/cart";
+import { ref } from 'vue';
 
-var orderData = ref({
-  total: 350,
-  orderlines: cartStore.items.map((i) => {
-    return {
+const cartStore = useAuthStore();
 
-  
-    product_id : i.product_id,
-    qty: i.qty,
-    amount: i.amount,
-  };
-  }),
-
-}); 
-
+const placeOrder = () => {
+   cartStore.placeOrder(cartStore.orderData);
+}
 </script>
 
 <style lang="scss" scoped>

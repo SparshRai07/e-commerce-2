@@ -4,12 +4,11 @@
       <v-label class="text-h4">Welcome Back</v-label>
       <v-text-field label="Email" outlined v-model="userData.email"></v-text-field>
       <v-text-field label="Password" type="password" outlined v-model="userData.password"></v-text-field>
-      <v-btn color="primary" @click="authStore.login(userData)">Login
+      <v-btn color="primary" @click="login">Login
         <v-progress-circular
-        indeterminate 
-        color="primary"
-        v-if="aurhStore.loading">
-
+          indeterminate 
+          color="primary"
+          v-if="authStore.loading">
         </v-progress-circular>
       </v-btn>
     </v-container>
@@ -17,25 +16,35 @@
 </template>
 
 <script setup>
+
 import { useAuthStore } from "~/store/auth";
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
 const authStore = useAuthStore();
+
 const router = useRouter();
-
 const userData = ref({
-  email: null,
-  password: null,
+  email: '',
+  password: '',
 });
+ 
 
-definePageMeta({
-  layout: "login",
-});
+const login = async () => {
+  try {
+    await authStore.login(userData.value); // Await the login action
+    redirectToHomepage();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const redirectToHomepage = () => {
   router.push('/');
 };
+
+definePageMeta({
+  layout: "login",
+});
 </script>
 
 <style scoped>
